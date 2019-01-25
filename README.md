@@ -1,5 +1,10 @@
 # scf-processor
 
+Config Info
+===========
+Application: REactive Cloud Stream using the Spring Cloud Function
+Middleware: Kafka Binder
+
 Run
 ====
 Run as SpringBoot App
