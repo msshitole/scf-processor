@@ -1,0 +1,444 @@
+@namespace("com.prime.avro.document")
+protocol Document {
+
+
+//ENUM have no value, we need to check if that's enough for our use-case
+  @namespace("com.prime.avro.document.attachment")
+  enum AttachmentType {
+    VIDEO,
+    AUDIO, // the bar enum value
+    PHOTO,
+    PDF,
+    LINK
+  }
+
+  @namespace("com.prime.avro.document.author")
+  enum AgeRange {
+    UNDER_EIGTHEEN,
+    EIGHTEEN_TO_TWENTY_NINE,
+    TWENTY_TO_THIRTY_NINE,
+    FORTY_TO_FORTY_NINE,
+    FIFTY_TO_FIFTY_NINE,
+    ABOVE_SIXTY
+  }
+
+  @namespace("com.prime.avro.document.author")
+  enum Gender{
+    MALE,
+    FEMALE,
+    OTHER
+  }
+
+  @namespace("com.prime.avro.document.metric")
+  enum MetricType{
+    AVG_ARTICLES_PER_MONTH,
+    AVG_DAILY_VISITORS,
+    AVG_DISPLAY_TIME_MONTH,
+    AVG_MAIN_PAGE_DURATION,
+    AVG_SOCIAL_COMMENTS_PER_ARTICLE,
+    AVG_SOCIAL_LIKES_PER_ARTICLE,
+    AVG_SOCIAL_SHARES_PER_ARTICLE,
+    AVG_SUB_PAGE_VIEWS,
+    BOUNCE_RATE,
+    D_CONTACT,
+    FACEBOOK_SHARES,
+    GOOGLE_PLUS_SHARES,
+    LENGTH_IN_SECONDS,
+    LINKEDIN_SHARES,
+    MAIN_PAGE_BOOST,
+    NUMBER_OF_ARTICLES_SAME_PAGE,
+    NUMBER_OF_CATEGORIES,
+    NUMBER_OF_CHARACTERS,
+    NUMBER_OF_CODED_PICTURES,
+    NUMBER_OF_COMMENTS,
+    NUMBER_OF_DISLIKES,
+    NUMBER_OF_HITS,
+    NUMBER_OF_LIKES,
+    NUMBER_OF_PARAGRAPHS,
+    NUMBER_OF_PRESENTATIONS,
+    NUMBER_OF_PICTURES,
+    NUMBER_OF_SHARES,
+    PAGE,
+    PAGES_PER_VISIT,
+    PAGE_IMPRESSIONS_PER_DAY,
+    PAGE_IMPRESSIONS_PER_MONTH,
+    PERCENTAGE_DIRECT_TRAFFIC,
+    PERCENTAGE_FEMALE_VISITORS,
+    PERCENTAGE_HOMEPAGE_TRAFFIC,
+    PERCENTAGE_MALE_VISITORS,
+    PERCENTAGE_SOCIAL_TRAFFIC,
+    PINTEREST_SHARES,
+    POSITION,
+    REAL_REACH_ARTICLE,
+    SIZE_CCS,
+    SOCIAL_BOOST,
+    TIME_ON_POSITION,
+    TOTAL_ARTICLES_THIS_MONTH,
+    TOTAL_TIME_VISIBLE,
+    TOTAL_VIEWS,
+    TWITTER_SHARES,
+    UNIQUE_VISITORS_PER_DAY,
+    UNIQUE_VISITORS_PER_MONTH
+  }
+
+  @namespace("com.prime.avro.document")
+  enum Provider {
+    AFP,
+    BLOOMBERG,
+    BOARDREADER,
+    CCS,
+    CSVUPLOAD,
+    PRIMERESEARCH,
+    INTERNAL_UPLOAD,
+    DATASIFT,
+    DOWJONES,
+    DPA,
+    EFE,
+    EMM,
+    FINANCIAL_TIMES,
+    GNIP,
+    KANTAR,
+    KANTAR_FRANCE,
+    MOREOVER,
+    NLA,
+    PRIME_CHINA,
+    PRIME_WEB_ANALYSIS,
+    PRIME_CRAWLER,
+    REUTERS,
+    RSSREADER,
+    TRENDICTION,
+    TV_EYES
+  }
+
+  @namespace("com.prime.avro.document.source")
+  enum SourceType {
+    BLOG,
+    BROADCAST,
+    FACEBOOK,
+    GOOGLEPLUS,
+    INSTAGRAM,
+    LINKEDIN,
+    PRINT,
+    SOCIAL_MEDIA,
+    TWITTER,
+    ONLINE_NEWS,
+    WEBCONTENT,
+    WECHAT,
+    WEIBO,
+    XING
+  }
+
+  @namespace("com.prime.avro.document.status")
+  enum Severity {
+    WARN,
+    ERROR,
+    FATAL
+  }
+
+  @namespace("com.prime.avro.document.status")
+  enum StatusType {
+    SUCCESS,
+    ERROR,
+    WARNING
+  }
+
+
+
+  @namespace("com.prime.avro.document.attachment")
+  record Attachment {
+    union {string, null} url;
+    union {string, null} type;
+    union {string, null} thumbnail;
+    union {string, null} title;
+    union {string, null} description;
+  }
+
+  @namespace("com.prime.avro.document.metric")
+  record Metric {
+    com.prime.avro.document.metric.MetricType type;
+    union {double, null} messageContact;
+    union {long, null} timestamp;
+    string platform;
+    union {string, null} provider;
+    long value;
+  }
+
+
+  @namespace("com.prime.avro.document.author")
+  record Author {
+    union {string, null} id;
+    union {string, null} name;
+    union {string, null} username;
+    union {AgeRange, null} age;
+    union {string, null} gender;
+    union {string, null} profileUrl;
+    union {string, null} profilePicture;
+    union {int, null} followers;
+    union {int, null} following;
+    union {int, null} friends;
+    union {int, null} listed;
+    union {int, null} statuses;
+    union {string, null} description;
+    union {boolean, null} verified;
+
+  }
+
+  @namespace("com.prime.avro.document.source")
+  record Source {
+    union {string, null} id;
+    union {string, null} name;
+    union {@java-class("java.util.ArrayList") array<string>, null} scopes;
+    union {string, null} url;
+    union {string, null} thumbnail;
+    union {string, null} genre;
+    union {string, null} mediaGenre;
+    union {string, null} mediaType;
+    union {int, null} uvd;
+    union {string, null} diffusion;
+    union {string, null} edition;
+    union {string, null} feedGenre;
+    union {string, null} type;
+    union {string, null} domain;
+  }
+
+  @namespace("com.prime.avro.document")
+  record Tokens {
+    union {@java-class("java.util.ArrayList") array<string>, null} title;
+    union {@java-class("java.util.ArrayList") array<string>, null} text;
+    union {@java-class("java.util.ArrayList") array<string>, null} subtitle;
+    union {@java-class("java.util.ArrayList") array<string>, null} teaser;
+  }
+
+  @namespace("com.prime.avro.document.branches")
+  record BranchInformation {
+    @java-class("java.util.ArrayList")array<string> branches;
+    union {string, null} matchedWhitelistWord;
+    union {string, null} matchedContextlistWord;
+  }
+//coding aspect, object and variable are the same object.. need general name
+  @namespace("com.prime.avro.document.dictionary")
+  record CodingAspect {
+    union {string, null} displayLabel;
+    union {string, null} label;
+    union {int, null} labelId;
+    union {string, null} mspell;
+    union {string, null} mdisIn;
+    union {string, null} variable; //enum??
+    union {array<string>, null} labelHierarchy;
+  }
+
+  @namespace("com.prime.avro.document.dictionary")
+  record CodingVariable {
+    union {string, null} displayLabel;
+    union {string, null} label;
+    union {int, null} labelId;
+    union {string, null} mspell;
+    union {string, null} mdisIn;
+    union {string, null} variable;
+  }
+
+  @namespace("com.prime.avro.document.dictionary")
+  record CodingObject {
+    union {string, null} displayLabel;
+    union {string, null} label;
+    union {int, null} labelId;
+    union {string, null} mspell;
+    union {string, null} mdisIn;
+    union {string, null} variable;
+  }
+
+  @namespace("com.prime.avro.document.dictionary")
+  record Coding {
+    union{CodingObject, null} object;
+    union{CodingAspect, null} aspect;
+    @java-class("java.util.ArrayList")array<CodingVariable> variables;
+    union {string, null} codingId;
+    union {string, null} loggingId;
+    union {string, null} matchedIn;
+    union {string, null} type;
+    union {string, null} sentiment;
+    union {double, null} metricsPrValue;
+    union {double, null} metricsPrAve;
+  }
+
+  @namespace("com.prime.avro.document")
+  record SearchKeyword {
+    string profileId;
+    string keyword;
+  }
+
+  record Sentiment{
+  //map<String,String> where the key is the title/paragraph and the value the sentiment
+    map<string> sentiments;
+  }
+
+  @namespace("com.prime.avro.document.influencer")
+  record Influencer{
+    union {string, null} id;
+    union {string, null} name;
+    union {@java-class("java.util.ArrayList")array<string>, null} groups;
+  }
+
+  @namespace("com.prime.avro.document.geo")
+  record Location {
+    double lat;
+    double lng;
+  }
+
+  @namespace("com.prime.avro.document.geo")
+  record Geo{
+    union {string, null} id;
+    union {string, null} city;
+    union {string, null} cityCode;
+    union {string, null} cityPath;
+    union {string, null} country;
+    union {string, null} countryCode;
+    union {Location, null} location;
+    union {string, null} postalCode;
+    union {string, null} region;
+    union {string, null} state;
+    union {string, null} stateCode;
+    union {string, null} street;
+    union {string, null} streetNumber;
+    union {string, null} subregion;
+  }
+
+  @namespace("com.prime.avro.document.ner")
+  record NamedEntity{
+    int sentiment;
+    int beginOffset;
+    int endOffset;
+    string term;
+    string label;
+    int sentenceIndex;
+    int ontologyIndex;
+  }
+
+//comment is not finalized.. there's probably something missing
+  @namespace("com.prime.avro.document")
+  record Comment {
+    union {com.prime.avro.document.author.Author, null} author;
+    string text;
+    long timestamp;
+    union {string, null} id;
+    union {string, null} url;
+    union {string, null} language;
+  }
+
+  @namespace("com.prime.avro.document.meta")
+  record FrontPagePosition{
+    int position;
+    int total;
+    long timestamp;
+  }
+
+//maybe it makes more sense here to use a list of smaller objects, it's always timestamp, type and user...
+  @namespace("com.prime.avro.document.meta")
+  record MetaInformation {
+    union{long, null} processedTimestamp;
+    union{long, null} updatedTimestamp;
+    union{long, null} uploadTimestamp;
+    union {string, null}  uploadType;
+    union {string, null}  uploadUser;
+    union{long, null} modifiedTimestamp;
+    union {string, null} modifiedType;
+    union {string, null} modifiedUser;
+    union{long, null} recodedTimestamp;
+    union {string, null}  recodedType;
+    union {string, null}  recodedUser;
+    union {long,null} indexedTimestamp;
+    union {long, null} fakeTimestamp;
+    union {@java-class("java.util.ArrayList")array<com.prime.avro.document.meta.FrontPagePosition>, null} frontPagePositions;
+    union {boolean, null} fulltextCrawled;
+    union {long, null} esCreatedTimestamp;
+    union {string, null} database;
+    union {string, null} origin;
+  }
+
+  @namespace("com.prime.avro.document.twitter")
+  record RetweetedInformation{
+    string tweetId;
+    union{string, null} username;
+    union{string, null} userId;
+  }
+
+  @namespace("com.prime.avro.document.twitter")
+  record ReplyInformation{
+    string documentId;
+    union{string, null} username;
+    union{string, null} userId;
+    union{string, null} originalText;
+    union{long, null} timestamp;
+  }
+
+  @namespace("com.prime.avro.document.status")
+  record Error{
+    union{string, null} message; //name form Enum com.prime.status.Status
+    union {int, null} code;
+    union{string, null} description;
+    union {Severity, null} severity;
+  }
+
+
+  @namespace("com.prime.avro.document.status")
+  record Service{
+    union{string, null} name;
+    union{@java-class("java.util.ArrayList") array<com.prime.avro.document.status.Error>, null} errors;
+  }
+
+  @namespace("com.prime.avro.document.status")
+  record Status{
+    union{StatusType, null} message;
+    union{@java-class("java.util.ArrayList") array<com.prime.avro.document.status.Service>, null} services;
+  }
+
+  @namespace("com.prime.avro.document")
+  record DocumentImpl {
+    string _id;
+    union {string, null} text;
+    union {string, null} title;
+    union {string, null} teaser;
+    union {string, null} subtitle;
+    union {string, null} html;
+    union {string, null} language;
+    union {long, null} timestamp;
+    union {string, null} timezone;
+    union {string, null} description;
+    union {int, null} length;
+    union {string, null} type;
+    union {string, null} mediaType;
+    union {string, null} url;
+    union {array<string>, null} mentions;
+    string provider;
+    union {array<string>, null} topics;
+    union {string, null} page;
+    union {string, null} thread;
+    union {string, null} threadId;
+    union {int, null} favourites;
+    union {double, null} prValue;
+    union {double, null} prAverage;
+    union {int, null} codedProminence;
+    union {com.prime.avro.document.twitter.RetweetedInformation, null} retweetedInformation;
+    union {@java-class("java.util.ArrayList") array<com.prime.avro.document.twitter.ReplyInformation>, null} replyInformation;
+
+    union {@java-class("java.util.ArrayList") array<com.prime.avro.document.attachment.Attachment>, null} attachments;
+    union {@java-class("java.util.ArrayList") array<com.prime.avro.document.metric.Metric>, null} metrics;
+    union {@java-class("java.util.ArrayList") array<com.prime.avro.document.author.Author>, null} authors;
+    union {@java-class("java.util.ArrayList") array<com.prime.avro.document.dictionary.Coding>, null} codings;
+    union {com.prime.avro.document.Sentiment, null} sentiment;
+    union {com.prime.avro.document.influencer.Influencer, null} influencer;
+    union {com.prime.avro.document.geo.Geo, null} geo;
+    union {@java-class("java.util.ArrayList") array<com.prime.avro.document.ner.NamedEntity>, null} namedEntities;
+    union {@java-class("java.util.ArrayList") array<com.prime.avro.document.Comment>, null} comments;
+    union {com.prime.avro.document.meta.MetaInformation, null} metaInformation;
+    union {com.prime.avro.document.branches.BranchInformation, null} branchInformation;
+    com.prime.avro.document.source.Source source;
+
+    union {@java-class("java.util.ArrayList") array<com.prime.avro.document.SearchKeyword>, null} searchKeywords;
+    union {@java-class("java.util.ArrayList") array<string>, null} searchKeywordIds;
+
+    union {com.prime.avro.document.Tokens, null} tokens;
+    union {com.prime.avro.document.status.Status, null} status;
+  }
+
+}
