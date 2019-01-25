@@ -2,8 +2,8 @@
 
 Config Info
 ===========
-Application: REactive Cloud Stream using the Spring Cloud Function
-Middleware: Kafka Binder
+- Application: Reactive Spring Cloud Stream using the Spring Cloud Function
+- Middleware: Kafka Binder
 
 Run
 ====
