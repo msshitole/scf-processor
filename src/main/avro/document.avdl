@@ -1,0 +1,10 @@
+@namespace("com.prime.avro.document")
+protocol Document {
+
+  @namespace("com.prime.avro.document")
+  record DocumentImpl {
+    string _id;
+    union {string, null} title;
+  }
+
+}
